@@ -149,6 +149,12 @@ public class Deploy {
 				deployLanguageFilesTask.execute();
 			}
 
+			AddWebAppToApplicationXmlTask addWebAppTask = new AddWebAppToApplicationXmlTask();
+			addWebAppTask.setLamsEarPath(config.getLamsEarPath());
+			addWebAppTask.setContextRoot(config.getToolContext());
+			addWebAppTask.setWebUri(config.getToolWebUri());
+			addWebAppTask.execute();
+
 			System.out.println("[mafeng]Tool update completed");
 			System.exit(0);
 	    } else {
