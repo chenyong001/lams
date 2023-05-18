@@ -98,12 +98,29 @@
 		   <fileset dir="${basedir}/build/lib/language" />
 		</copy>
 	</target>
-	
+
 
 	<!-- Not needed. Does not even display warning to avoid confusion -->
 	<target name="_copy-hbm" />
-	
-	
+
+
 	<target name="explode-war" depends="_target-not-available" description="Explodes deployed WAR to folder." />
+
+    <!-- ******************************** 新加ant命令 by mafeng ************************************************************ -->
+	<target name="deploy-war-as" depends="_build-war" description="Deploys WAR.">
+		<echo>${ant.project.name}: Deploying WAR</echo>
+		<copy todir="${base.dir}/assembly/lams.ear/${product}.war" overwrite="true" verbose="true" >
+			<fileset dir="${basedir}/build/lib/${product}.war" />
+		</copy>
+
+		<echo>Copying language files for ${ant.project.name}, if exist</echo>
+		<copy todir="${base.dir}/assembly/lams.ear/lams-dictionary.jar/${product.path.filesystem}" overwrite="true">
+			<fileset dir="${conf.dir}/language/lams" erroronmissingdir="false">
+				<include name="**/*.properties"/>
+				<include name="**/*.txt"/>
+			</fileset>
+		</copy>
+	</target>
+
 
 </project>
