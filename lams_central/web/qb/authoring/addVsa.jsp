@@ -67,10 +67,11 @@
 		    			$("#description").val(CKEDITOR.instances.description.getData());
 		    			$("#feedback").val(CKEDITOR.instances.feedback.getData());
 		    			$("#new-collection-uid").val($("#collection-uid-select option:selected").val());
-		    			
-		    	    	var options = { 
-		    	    		target:  parent.jQuery('#itemArea'), 
-		    		   		success: afterRatingSubmit  // post-submit callback
+
+                        var isVersionBeingChecked = isVersionCheck(),
+                          options = {
+		    	    		target:  parent.jQuery('#itemArea'),
+							success: isVersionBeingChecked? afterVersionCheck : afterRatingSubmit  // post-submit callback
 		    		    }; 				
 		    		    				
 		    			$('#assessmentQuestionForm').ajaxSubmit(options);

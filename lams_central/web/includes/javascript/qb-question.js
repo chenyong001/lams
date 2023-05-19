@@ -30,6 +30,9 @@ $(document).ready(function(){
 	});
 });
 
+function formValidationSuccess(){
+
+}
 // submits whole question form in order to check if it changed enough to produce a new question version
 function checkQuestionNewVersion(quick){
 	if (isNewQuestion) {
