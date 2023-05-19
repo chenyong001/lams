@@ -66,7 +66,8 @@
 		    		invalidHandler: formValidationInvalidHandler,
 					errorElement: "em",
 					errorPlacement: formValidationErrorPlacement,
-					success: formValidationSuccess,
+					// 该方法会报错，暂时先注释掉
+					// success: formValidationSuccess,
 					highlight: formValidationHighlight,
 					unhighlight: formValidationUnhighlight
 		  		});

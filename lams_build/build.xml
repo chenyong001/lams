@@ -21,6 +21,7 @@
 		build-db                  --> Creates database tables and entries
 		deploy-ear-updater        --> Builds and deploys LAMS EAR for updater
 		deploy-lams	              --> Runs full LAMS redeployment
+		deploy-lams-nodb	      --> Runs full LAMS redeployment with out db
 		deploy-lams-min-tools     --> Runs full LAMS redeployment with minimal Tools set
 		deploy-lams-min-tools     --> Runs full LAMS redeployment with full Tools set. Mainly for development.
 		slim-wildfly              --> Removes unused WidlFly files
@@ -1010,6 +1011,11 @@
 			</filterset>
 		</copy>
 	</target>
+	<!-- 完全重新部署，但是不会覆盖数据库 -->
+	<target name="deploy-lams-nodb" depends="_build-ear, _deploy-ear, _deploy-resources, _deploy-tools-nodb, _deploy-learning-libraries-nodb"
+			description="Builds entire LAMS,But no DB" />
+
+
 
 	<!-- 核心模块打包，不生成配置文件 -->
 	<target name="_build-ear-noconf" depends="_clean-dirs, _build-core">
@@ -1058,7 +1064,7 @@
 
 	<!-- 本地修改了核心模块代码或者插件代码可以用这个更新，执行后将assembly/lams.ear中的内容复制到jboss的目录下进行覆盖 -->
 	<!-- 该命令会将插件模块直接更新到jboss的目录中，核心模块打包到assembly/lams.ear中，需要手动复制到jboss目录中-->
-	<target name="deploy-ear-updater" depends="_build-ear-noconf, _deploy-tools-nodb, _deploy-learning-libraries-nodb"
+	<target name="deploy-ear-updater" depends="_build-ear, _deploy-tools-nodb, _deploy-learning-libraries-nodb"
 			description="Deploys EAR file to the win_installer directory.">
 		<echo>Deploying EAR and tools to Windows Installer dir</echo>
 		<delete dir="../win_installer/assembly"/>
@@ -1089,6 +1095,7 @@
 		</copy>
 	</target>
 
+	<!--  Deploy.java中进行复制jar，war包到jboss目录下的操作，不涉及数据库  -->
 	<target name="_deploy-tools-nodb">
 		<echo>Deploying Tools</echo>
 		<ant antfile="../lams_tool_assessment/build.xml"    target="deploy-tool-nodb" inheritAll="false" />
@@ -1116,6 +1123,7 @@
 		<ant antfile="../lams_tool_preview/build.xml"       target="deploy-tool-nodb" inheritAll="false" />
 	</target>
 
+	<!--  Deploy.java中进行复制jar，war包到jboss目录下的操作，但是不涉及数据库  -->
 	<target name="_deploy-tools-nodb2">
 		<echo>Deploying Tools</echo>
 		<ant antfile="../lams_tool_assessment/build.xml"    target="_deploy-product" inheritAll="false" />

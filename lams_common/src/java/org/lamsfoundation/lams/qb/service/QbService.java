@@ -191,6 +191,11 @@ public class QbService implements IQbService {
 	    if (option.isCorrect()) {
 		correctOptionUids.add(option.getUid());
 	    }
+		if (QbQuestion.TYPE_NUMERICAL == qbQuestion.getType()) {
+			// 如果是数值题，那么name字段为空，页面上显示空
+			// 暂时将numerical_option字段设置为name
+			option.setName(String.valueOf(option.getNumericalOption()));
+		}
 	}
 	// calculate correct answer average for each activity
 	for (ToolActivity activity : activities) {
@@ -217,10 +222,17 @@ public class QbService implements IQbService {
 	    answerPercent.put(option.getUid(), value);
 
 	    ObjectNode answerJSON = JsonNodeFactory.instance.objectNode();
-	    String name = WebUtil.removeHTMLtags(option.getName());
-	    name = (answerIndex + 1) + ". " + (name.length() > 30 ? name.substring(0, 30) + "..." : name);
-	    answerJSON.put("name", name);
-	    answerJSON.put("value", value);
+		String name;
+	    if (QbQuestion.TYPE_NUMERICAL == qbQuestion.getType()) {
+	    	// 如果是数值题，那么name字段为空，不能进行之前的处理，不然会报错空指针
+			// 暂时将numerical_option字段设置为name
+			name = (answerIndex + 1) + ". " + option.getNumericalOption();
+		} else {
+			name = WebUtil.removeHTMLtags(option.getName());
+			name = (answerIndex + 1) + ". " + (name.length() > 30 ? name.substring(0, 30) + "..." : name);
+		}
+		answerJSON.put("name", name);
+		answerJSON.put("value", value);
 	    answersJSON.add(answerJSON);
 	}
 	stats.setAnswersPercent(answerPercent);
