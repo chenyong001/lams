@@ -150,6 +150,7 @@
 	<div class="login-footer">
 		<p class="text-muted text-center">
 			<a href="/lams/www/copyright.jsp" target='copyright' onClick="openCopyRight()"> &copy; <fmt:message key="msg.LAMS.copyright.short" /></a>
+			<a href="https://beian.miit.gov.cn/" target='_blank'>蜀ICP备2023011562号-1</a>
 		</p>
 	</div>
 
