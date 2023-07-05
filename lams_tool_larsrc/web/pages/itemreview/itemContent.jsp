@@ -28,12 +28,16 @@ License Information: http://lamsfoundation.org/licensing/lams/2.0/
 <c:set var="finishedLock" value="${sessionMap.finishedLock}" />
 
 <script>
+
+	$(document).oncontextmenu = function(){
+		return false;
+	}
 	$(document).ready(function(){
 
 		<c:if test="${sessionMap.rateItems}">
 			initializeJRating();
 		</c:if>
-		
+
 		var isDownload = ${isDownload},
 			panel = $('#item-content-${itemUid}');
 
@@ -41,7 +45,7 @@ License Information: http://lamsfoundation.org/licensing/lams/2.0/
 			$('.download-button', panel).removeClass('hidden');
 			return;
    		}
-   		
+
 		$.ajax({
 		    url: "https://ckeditor.iframe.ly/api/oembed?url=" + encodeURIComponent("${resourceItemReviewUrl}"),
 		    dataType: "jsonp",
@@ -71,7 +75,7 @@ License Information: http://lamsfoundation.org/licensing/lams/2.0/
 	
 	<div class="content-panel">
 	
-		<div class="text-center">
+		<div class="text-center" style="display: none">
 			<a href="<c:url value='${resourceItemReviewUrl}' />&preferDownload=true" class="download-button hidden btn btn-primary">
 				<fmt:message key="label.download" />
 			</a>
@@ -97,7 +101,7 @@ License Information: http://lamsfoundation.org/licensing/lams/2.0/
 			</c:if>
 			<c:if test="${isDisplayableEmbed}">
 				<div class="embedded-file">
-					<embed src="<c:url value='${resourceItemReviewUrl}' />&preferDownload=false#toolbar=0" />
+					<embed src="<lams:WebAppURL/>pages/pdfjs/web/viewer.html?file=<c:url value='${resourceItemReviewUrl}' />&preferDownload=false#toolbar=0" />
 				</div>
 			</c:if>		
 
