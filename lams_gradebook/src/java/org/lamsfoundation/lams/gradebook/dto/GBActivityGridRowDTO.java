@@ -155,8 +155,9 @@ public class GBActivityGridRowDTO extends GradebookGridRowDTO {
 	    }
 
 	    ret.add((medianTimeTaken != null) ? convertTimeToString(medianTimeTaken) : CELL_EMPTY);
-	    ret.add(CELL_EMPTY);
-	    ret.add(CELL_EMPTY);
+	    // 2023-07-05 by mf, 修改平均分显示为-的bug
+//	    ret.add(CELL_EMPTY);
+//	    ret.add(CELL_EMPTY);
 	    ret.add(competences);
 	    ret.add(averageMark != null ? GradebookUtil.niceFormatting(averageMark) : CELL_EMPTY);
 

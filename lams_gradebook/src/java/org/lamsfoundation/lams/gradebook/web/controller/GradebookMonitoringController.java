@@ -295,8 +295,9 @@ public class GradebookMonitoringController {
 
     @RequestMapping("/getReleaseMarksEmailContent")
     @ResponseBody
-    public String getReleaseMarksEmailContent(@RequestParam long lessonID, @RequestParam int userID) {
-	return gradebookService.getReleaseMarksEmailContent(lessonID, userID);
+    public String getReleaseMarksEmailContent(@RequestParam long lessonID, @RequestParam int userID, HttpServletResponse response) {
+		response.setContentType("text/html;charset=utf-8");
+    	return gradebookService.getReleaseMarksEmailContent(lessonID, userID);
     }
 
     @RequestMapping("/sendReleaseMarksEmails")
