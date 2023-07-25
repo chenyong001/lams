@@ -10,8 +10,10 @@
 	
 	<target name="_compile-java" depends="_target-not-available"/>
 
-			
-	<target name="deploy-war" depends="_target-not-available" description="Deploys WAR." />
+	<target name="deploy-war" depends="_clean-dirs,_build-war" description="Deploys WAR." >
+		<unjar src="../lams_www/build/lib/lams-www.war"
+				dest="${server.home}/standalone/deployments/lams.ear/lams-www.war"/>
+	</target>
 
 
 	<target name="explode-war" depends="_target-not-available"

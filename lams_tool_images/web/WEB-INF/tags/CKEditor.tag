@@ -93,6 +93,8 @@
 				filebrowserImageBrowseLinkUrl : "${ckEditorBasePath}filemanager/browser/default/browser.html?Connector=connectors/jsp/connector&CurrentFolder=/" + contentFolderID + "/",
 				filebrowserFlashBrowseUrl     : "${ckEditorBasePath}filemanager/browser/default/browser.html?Type=Flash&Connector=connectors/jsp/connector&CurrentFolder=/" + contentFolderID + "/",
 				filebrowserFlashUploadUrl     : "${ckEditorBasePath}filemanager/upload/simpleuploader?Type=Flash&CurrentFolder=/" + contentFolderID + "/",
+				filebrowserHtml5videoUploadUrl: "${ckEditorBasePath}filemanager/upload/simpleuploader?Type=Media&CurrentFolder=/" + contentFolderID + "/",
+				filebrowserHtml5videoBrowseUrl: "${ckEditorBasePath}filemanager/browser/default/browser.html?Type=Media&Connector=connectors/jsp/connector&CurrentFolder=/" + contentFolderID + "/",
 				contentFolderID				  : contentFolderID
 		};
 		

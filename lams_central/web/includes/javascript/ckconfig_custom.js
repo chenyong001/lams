@@ -2,13 +2,13 @@
 // Main difference Source became Sourcedialog and Maximize and Preview were dropped.
 
 CKEDITOR.config.toolbar_Default = [
-	['Source','Preview','-','Maximize','Undo','Redo','Bold','Italic','Underline', '-','Subscript','Superscript','NumberedList','BulletedList','-','Outdent','Indent','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','TextColor','BGColor','Jlatexmath','-'], 
-	['Link','Table','HorizontalRule','-','Emojione','bootsnippets-text','bootsnippets-image','bootsnippets-multimedia','bootsnippets-advanced-layout','Format','Font','FontSize']
+	['Source','Preview','-','Maximize','Undo','Redo','Bold','Italic','Underline', '-','Subscript','Superscript','NumberedList','BulletedList','-','Outdent','Indent','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','TextColor','BGColor','Jlatexmath','-'],
+	['CodeSnippet','Wirischem','Wirismath','Link','Table','HorizontalRule','-','Emojione','bootsnippets-text','bootsnippets-image','bootsnippets-multimedia','Html5video','bootsnippets-advanced-layout','Format','Font','FontSize']
 ];
 
 CKEDITOR.config.toolbar_DefaultInline = [
 	['Sourcedialog','Preview','-','Undo','Redo','Bold','Italic','Underline', '-','Subscript','Superscript','NumberedList','BulletedList','-','Outdent','Indent','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','TextColor','BGColor','Jlatexmath','-'], 
-    ['Link','Table','HorizontalRule','-','Emojione','bootsnippets-text','bootsnippets-image','bootsnippets-multimedia','bootsnippets-advanced-layout','Format','Font','FontSize']
+    ['CodeSnippet','Wirischem','Wirismath','Link','Table','HorizontalRule','-','Emojione','bootsnippets-text','bootsnippets-image','bootsnippets-multimedia','Html5video','bootsnippets-advanced-layout','Format','Font','FontSize']
 ];
 
 CKEDITOR.config.toolbar_DefaultDokuInline = [
@@ -23,10 +23,10 @@ CKEDITOR.config.toolbar_DefaultLearner = [
 	['Bold','Italic','Underline', '-','Subscript','Superscript'],
 	['NumberedList','BulletedList','-','Outdent','Indent'],
 	['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-	['Jlatexmath'],
+	['Wirischem','Wirismath','Jlatexmath'],
 	['TextColor','BGColor'],
 	['Table','HorizontalRule'],
-	['bootsnippets-text','bootsnippets-image','bootsnippets-multimedia','Format','Font','FontSize']
+	['bootsnippets-text','bootsnippets-image','bootsnippets-multimedia','Html5video','Format','Font','FontSize','CodeSnippet']
 ];
 
 CKEDITOR.config.toolbar_DefaultLearnerInline = [
@@ -34,10 +34,10 @@ CKEDITOR.config.toolbar_DefaultLearnerInline = [
   	['Bold','Italic','Underline', '-','Subscript','Superscript'],
   	['NumberedList','BulletedList','-','Outdent','Indent'],
   	['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-  	['Jlatexmath','-','Link'],
+  	['Wirischem','Wirismath','Jlatexmath','-','Link'],
   	['TextColor','BGColor'],
   	['Table','HorizontalRule'],
-  	['bootsnippets-text','bootsnippets-image','bootsnippets-multimedia','Format','Font','FontSize']
+  	['bootsnippets-text','bootsnippets-image','bootsnippets-multimedia','Html5video','Format','Font','FontSize','CodeSnippet']
   ];
 
 CKEDITOR.config.toolbar_DefaultMonitor = [
@@ -46,10 +46,10 @@ CKEDITOR.config.toolbar_DefaultMonitor = [
 	['Bold','Italic','Underline', '-','Subscript','Superscript'],
 	['NumberedList','BulletedList','-','Outdent','Indent'],
 	['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-	['Jlatexmath'],
+	['Wirischem','Wirismath','Jlatexmath'],
 	['TextColor','BGColor'],
 	['Table','HorizontalRule'],
-	['Format','Font','FontSize']
+	['Format','Font','FontSize','CodeSnippet']
 ];
 
 CKEDITOR.config.toolbar_DefaultMonitorInline = [
@@ -57,10 +57,10 @@ CKEDITOR.config.toolbar_DefaultMonitorInline = [
   	['Bold','Italic','Underline', '-','Subscript','Superscript'],
   	['NumberedList','BulletedList','-','Outdent','Indent'],
   	['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-  	['Jlatexmath'],
+  	['Wirischem','Wirismath','Jlatexmath'],
   	['TextColor','BGColor'],
   	['Table','HorizontalRule'],
-  	['Format','Font','FontSize']
+  	['Format','Font','FontSize','CodeSnippet']
 ];
 
 CKEDITOR.config.toolbar_CustomWiki = [
@@ -70,10 +70,10 @@ CKEDITOR.config.toolbar_CustomWiki = [
 	['NumberedList','BulletedList','-','Outdent','Indent'],
 	['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
 	['wikilink','Link'],
-	['Jlatexmath'],
+	['Wirischem','Wirismath','Jlatexmath'],
 	['TextColor','BGColor'],
 	['Table','HorizontalRule'],
-	['bootsnippets-text','bootsnippets-image','bootsnippets-multimedia','Format','Font','FontSize']
+	['bootsnippets-text','bootsnippets-image','bootsnippets-multimedia','Html5video','Format','Font','FontSize','CodeSnippet']
 ];
 
 CKEDITOR.config.toolbar_CustomWikiInline = [
@@ -83,10 +83,10 @@ CKEDITOR.config.toolbar_CustomWikiInline = [
   	['NumberedList','BulletedList','-','Outdent','Indent'],
   	['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
   	['wikilink','Link'],
-  	['Jlatexmath'],
+  	['Wirischem','Wirismath','Jlatexmath'],
   	['TextColor','BGColor'],
   	['Table','HorizontalRule'],
-  	['bootsnippets-text','bootsnippets-image','bootsnippets-multimedia','Format','Font','FontSize']
+  	['bootsnippets-text','bootsnippets-image','bootsnippets-multimedia','Html5video','Format','Font','FontSize','CodeSnippet']
 ];
 
 CKEDITOR.config.toolbar_CustomWikiLearner = [
@@ -95,10 +95,10 @@ CKEDITOR.config.toolbar_CustomWikiLearner = [
 	['NumberedList','BulletedList','-','Outdent','Indent'],
 	['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
 	['wikilink','Link'],
-	['Jlatexmath'],
+	['Wirischem','Wirismath','Jlatexmath'],
 	['TextColor','BGColor'],
 	['Table','HorizontalRule'],
-	['bootsnippets-text','bootsnippets-image','bootsnippets-multimedia','Format','Font','FontSize']
+	['bootsnippets-text','bootsnippets-image','bootsnippets-multimedia','Html5video','Format','Font','FontSize','CodeSnippet']
 ];
 
 CKEDITOR.config.toolbar_CustomWikiLearnerInline = CKEDITOR.config.toolbar_CustomWikiLearner;
@@ -109,7 +109,7 @@ CKEDITOR.config.toolbar_LessonDescription = [
 	['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
 	['TextColor','BGColor'],
 	['Table','HorizontalRule'],
-	['bootsnippets-text','bootsnippets-image','bootsnippets-multimedia','-','Format','Font','FontSize']
+	['bootsnippets-text','bootsnippets-image','bootsnippets-multimedia','Html5video','-','Format','Font','FontSize','CodeSnippet']
 ];
 
 CKEDITOR.config.toolbar_LessonDescriptionInline = [
@@ -118,7 +118,7 @@ CKEDITOR.config.toolbar_LessonDescriptionInline = [
  	['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
  	['TextColor','BGColor'],
  	['Table','HorizontalRule'],
- 	['bootsnippets-text','bootsnippets-image','bootsnippets-multimedia','-','Format','Font','FontSize']
+ 	['bootsnippets-text','bootsnippets-image','bootsnippets-multimedia','Html5video','-','Format','Font','FontSize','CodeSnippet']
  ];
 
 
@@ -132,7 +132,7 @@ CKEDITOR.config.bootsnippets_files = [CKEDITOR.basePath + '../www/public/ckedito
 CKEDITOR.config.format_tags	= 'div;h1;h2;h3;h4;h5;h6;pre;address;p' ;
 CKEDITOR.plugins.addExternal('wikilink', CKEDITOR.basePath + '../tool/lawiki10/wikilink/', 'plugin.js');
 // html5audio is available but not used anymore; it probably needs fixes as in CKEditor README doc
-CKEDITOR.config.extraPlugins = 'wikilink,jlatexmath,image2,confighelper,bootstrapTabs,bootpanel,bootsnippets,wavepanel,wordcount,notification,oembed';
+CKEDITOR.config.extraPlugins = 'codesnippet, ckeditor_wiris, html5video, wikilink,jlatexmath,image2,confighelper,bootstrapTabs,bootpanel,bootsnippets,wavepanel,wordcount,notification,oembed';
 CKEDITOR.config.enterMode = CKEDITOR.ENTER_DIV; 
 CKEDITOR.config.removePlugins = 'elementspath,about,specialchar';
 CKEDITOR.config.allowedContent = true;
