@@ -34,6 +34,7 @@
 				<property name="chatSessionDAO"><ref bean="chatSessionDAO"/></property>
 				<property name="chatUserDAO"><ref bean="chatUserDAO"/></property>
 				<property name="chatDAO"><ref bean="chatDAO"/></property>
+				<property name="azureApiKeyDAO"><ref bean="azureApiKeyDAO"/></property>
 				<property name="toolService"><ref bean="lamsToolService"/></property>
 				<property name="logEventService"><ref bean="logEventService"/></property>
  				<property name="chatToolContentHandler"><ref bean="chatToolContentHandler"/></property>
@@ -82,6 +83,10 @@
 	</bean>
 	
 	<bean id="chatMessageDAO" class="org.lamsfoundation.lams.tool.chat.dao.hibernate.ChatMessageDAO">
+		<property name="sessionFactory"><ref bean="coreSessionFactory"/></property>
+	</bean>
+
+	<bean id="azureApiKeyDAO" class="org.lamsfoundation.lams.tool.chat.dao.hibernate.AzureApiKeyDAO">
 		<property name="sessionFactory"><ref bean="coreSessionFactory"/></property>
 	</bean>
 

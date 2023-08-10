@@ -198,4 +198,6 @@ public interface IChatService extends ICommonToolService {
     List<ChatMessage> getMessagesSentByUser(Long userUid);
 
     void releaseConditionsFromCache(Chat chat);
+
+    String getAzureApiKey();
 }

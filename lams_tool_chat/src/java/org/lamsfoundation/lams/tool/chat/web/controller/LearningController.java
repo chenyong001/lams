@@ -25,6 +25,7 @@ package org.lamsfoundation.lams.tool.chat.web.controller;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.Set;
 import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
@@ -104,6 +105,25 @@ public class LearningController {
 	    if (notebookEntry != null) {
 		chatUserDTO.notebookEntry = notebookEntry.getEntry();
 	    }
+	} else {
+		// 判断如果聊天中没有chatAi就加一个chatAi
+		boolean noChatAi = true;
+		Set<ChatUser> chatUsers = chatSession.getChatUsers();
+		if (1 != chatUsers.size()){
+			for (ChatUser user : chatUsers) {
+				if (LearningWebsocketServer.NICKNAME_FOR_AI.equals(user.getNickname())){
+					noChatAi = false;
+					break;
+				}
+			}
+		}
+		if (noChatAi){
+			ChatUser user = new ChatUser();
+			user.setFinishedActivity(true);
+			user.setNickname(LearningWebsocketServer.NICKNAME_FOR_AI);
+			user.setChatSession(chatSession);
+			chatService.saveOrUpdateChatUser(user);
+		}
 	}
 	request.setAttribute("chatUserDTO", chatUserDTO);
 

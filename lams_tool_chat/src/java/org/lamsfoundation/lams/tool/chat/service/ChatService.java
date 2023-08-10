@@ -54,6 +54,7 @@ import org.lamsfoundation.lams.tool.ToolOutput;
 import org.lamsfoundation.lams.tool.ToolOutputDefinition;
 import org.lamsfoundation.lams.tool.ToolSessionExportOutputData;
 import org.lamsfoundation.lams.tool.ToolSessionManager;
+import org.lamsfoundation.lams.tool.chat.dao.IAzureApiKeyDAO;
 import org.lamsfoundation.lams.tool.chat.dao.IChatDAO;
 import org.lamsfoundation.lams.tool.chat.dao.IChatMessageDAO;
 import org.lamsfoundation.lams.tool.chat.dao.IChatSessionDAO;
@@ -92,6 +93,8 @@ public class ChatService implements ToolSessionManager, ToolContentManager, ICha
     private IChatUserDAO chatUserDAO = null;
 
     private IChatMessageDAO chatMessageDAO = null;
+
+    private IAzureApiKeyDAO azureApiKeyDAO = null;
 
     private ILamsToolService toolService;
 
@@ -706,6 +709,14 @@ public class ChatService implements ToolSessionManager, ToolContentManager, ICha
 	this.chatDAO = chatDAO;
     }
 
+	public IAzureApiKeyDAO getAzureApiKeyDAO() {
+		return this.azureApiKeyDAO;
+	}
+
+    public void setAzureApiKeyDAO(IAzureApiKeyDAO azureApiKeyDAO) {
+		this.azureApiKeyDAO = azureApiKeyDAO;
+    }
+
     public IToolContentHandler getChatToolContentHandler() {
 	return chatToolContentHandler;
     }
@@ -868,7 +879,13 @@ public class ChatService implements ToolSessionManager, ToolContentManager, ICha
 	    return new ToolCompletionStatus(ToolCompletionStatus.ACTIVITY_ATTEMPTED, startDate, null);
 	}
     }
-    // =========================================================================================
+
+	@Override
+	public String getAzureApiKey() {
+		return azureApiKeyDAO.getApiKey();
+	}
+
+	// =========================================================================================
 
     // ****************** REST methods *************************
 
