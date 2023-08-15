@@ -150,7 +150,7 @@ public class LearningWebsocketServer {
 	    ArrayNode rosterJSON = null;
 	    String rosterString = null;
 	    for (Websocket websocket : sessionWebsockets) {
-		if (NICKNAME_FOR_AI.equals(websocket.nickName)){
+		if (getAzureAiName().equals(websocket.nickName)){
 			// 不处理chatAi
 			continue;
 		}
@@ -220,7 +220,7 @@ public class LearningWebsocketServer {
 	    // find out who is active locally
 	    for (Websocket websocket : sessionWebsockets) {
 		localActiveUsers.put(websocket.nickName,
-				NICKNAME_FOR_AI.equals(websocket.nickName) ? new String[] {"", ""} : new String[] { websocket.lamsUserId.toString(), websocket.portraitId });
+				getAzureAiName().equals(websocket.nickName) ? new String[] {"", ""} : new String[] { websocket.lamsUserId.toString(), websocket.portraitId });
 	    }
 
 	    // is it time to sync with the DB yet?
@@ -235,7 +235,7 @@ public class LearningWebsocketServer {
 		// refresh current collection
 		activeUsers.clear();
 		for (ChatUser activeUser : storedActiveUsers) {
-		    activeUsers.put(activeUser.getNickname(), NICKNAME_FOR_AI.equals(activeUser.getNickname()) ? new String[] {"", ""} : new String[] { activeUser.getUserId().toString(),
+		    activeUsers.put(activeUser.getNickname(), getAzureAiName().equals(activeUser.getNickname()) ? new String[] {"", ""} : new String[] { activeUser.getUserId().toString(),
 			    LearningWebsocketServer.getPortraitId(activeUser.getUserId()) });
 		}
 
@@ -265,7 +265,7 @@ public class LearningWebsocketServer {
     private static final Map<Long, Roster> rosters = new ConcurrentHashMap<>();
     private static final Map<Long, Set<Websocket>> websockets = new ConcurrentHashMap<>();
 	private static String azureApiKey;
-	public static final String NICKNAME_FOR_AI = "chatAi";
+	private static String azureAiName;
 
     static {
 	// run the singleton thread
@@ -278,6 +278,18 @@ public class LearningWebsocketServer {
 			log.info("set AzureApiKey:" + azureApiKey);
 		}
 		return azureApiKey;
+	}
+
+	public static String getAzureAiName(){
+    	if (null == azureAiName){
+			azureAiName =  LearningWebsocketServer.getChatService().getAzureAiName();
+			log.info("set AzureAiName:" + azureAiName);
+		}
+		return azureAiName;
+	}
+
+	private static String getAzureAiNameAndAt(){
+		return "@" + getAzureAiName();
 	}
 
     /**
@@ -298,7 +310,7 @@ public class LearningWebsocketServer {
 	Set<Websocket> sessionWebsockets = LearningWebsocketServer.websockets.get(toolSessionId);
 	if (sessionWebsockets == null) {
 	    sessionWebsockets = ConcurrentHashMap.newKeySet();
-		Websocket websocketForAi = new Websocket(NICKNAME_FOR_AI);
+		Websocket websocketForAi = new Websocket(getAzureAiName());
 		sessionWebsockets.add(websocketForAi);
 	    LearningWebsocketServer.websockets.put(toolSessionId, sessionWebsockets);
 	}
@@ -337,7 +349,7 @@ public class LearningWebsocketServer {
 	Iterator<Websocket> websocketIterator = sessionWebsockets.iterator();
 	while (websocketIterator.hasNext()) {
 	    Websocket websocket = websocketIterator.next();
-	    if (NICKNAME_FOR_AI.equals(websocket.nickName)){
+	    if (getAzureAiName().equals(websocket.nickName)){
 	    	continue;
 		}
 	    if (websocket.session.equals(session)) {
@@ -408,7 +420,7 @@ public class LearningWebsocketServer {
 		LearningWebsocketServer.getChatService().saveOrUpdateChatMessage(chatMessage);
 
 		// 判断是否询问chatAi
-		if (message.trim().startsWith("@chatAi")){
+		if (message.trim().startsWith(getAzureAiNameAndAt())){
 			new Thread(() -> {
 				try {
 					Websocket websocketFromUser = null;
@@ -422,7 +434,7 @@ public class LearningWebsocketServer {
 					String result = askChatAiWithMessages(messageForAskAi, websocketFromUser);
 					HibernateSessionManager.openSession();
 					ChatUser chatAiUser = LearningWebsocketServer.getChatService()
-							.getUserByNicknameAndSessionID(NICKNAME_FOR_AI, toolSessionId);
+							.getUserByNicknameAndSessionID(getAzureAiName(), toolSessionId);
 					ChatMessage chatMessageForAnswer = new ChatMessage();
 					chatMessageForAnswer.setFromUser(chatAiUser);
 					chatMessageForAnswer.setChatSession(chatAiUser.getChatSession());
@@ -518,9 +530,12 @@ public class LearningWebsocketServer {
 			Map<String, Object> bodyParams = new HashMap<>(3);
 
 			List<ChatGPTMessage> messages = new ArrayList<>();
-			if (null == websocket || CollectionUtils.isEmpty(websocket.messages)) {
+			if (null == websocket || CollectionUtils.isEmpty(websocket.messages) || websocket.messages.size() >= 1024) {
 				String system = "You are a helpful assistant.";
 				messages.add(new ChatGPTMessage("system", system));
+				if (null != websocket && CollectionUtils.isNotEmpty(websocket.messages)) {
+					messages.addAll(websocket.messages.subList(websocket.messages.size() - 2, websocket.messages.size()));
+				}
 			} else {
 				messages = websocket.messages;
 			}

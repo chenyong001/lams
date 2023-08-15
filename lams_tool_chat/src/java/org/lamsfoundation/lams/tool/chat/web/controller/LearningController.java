@@ -111,7 +111,7 @@ public class LearningController {
 		Set<ChatUser> chatUsers = chatSession.getChatUsers();
 		if (1 != chatUsers.size()){
 			for (ChatUser user : chatUsers) {
-				if (LearningWebsocketServer.NICKNAME_FOR_AI.equals(user.getNickname())){
+				if (LearningWebsocketServer.getAzureAiName().equals(user.getNickname())){
 					noChatAi = false;
 					break;
 				}
@@ -120,7 +120,7 @@ public class LearningController {
 		if (noChatAi){
 			ChatUser user = new ChatUser();
 			user.setFinishedActivity(true);
-			user.setNickname(LearningWebsocketServer.NICKNAME_FOR_AI);
+			user.setNickname(LearningWebsocketServer.getAzureAiName());
 			user.setChatSession(chatSession);
 			chatService.saveOrUpdateChatUser(user);
 		}

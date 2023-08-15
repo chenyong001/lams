@@ -200,4 +200,5 @@ public interface IChatService extends ICommonToolService {
     void releaseConditionsFromCache(Chat chat);
 
     String getAzureApiKey();
+    String getAzureAiName();
 }

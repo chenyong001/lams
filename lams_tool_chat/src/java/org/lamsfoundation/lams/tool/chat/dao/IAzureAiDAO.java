@@ -6,6 +6,7 @@ package org.lamsfoundation.lams.tool.chat.dao;
  * @description
  * @date 2023/7/25 16:17
  */
-public interface IAzureApiKeyDAO {
+public interface IAzureAiDAO {
     String getApiKey();
+    String getAzureAiName();
 }
