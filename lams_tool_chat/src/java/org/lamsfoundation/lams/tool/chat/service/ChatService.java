@@ -527,6 +527,9 @@ public class ChatService implements ToolSessionManager, ToolContentManager, ICha
 	Date currentTime = new Date();
 	for (String userName : activeUsers) {
 	    ChatUser chatUser = getUserByNicknameAndSessionID(userName, toolSessionId);
+	    if (null == chatUser){
+	    	continue;
+		}
 	    chatUser.setLastPresence(currentTime);
 	    saveOrUpdateChatUser(chatUser);
 	}

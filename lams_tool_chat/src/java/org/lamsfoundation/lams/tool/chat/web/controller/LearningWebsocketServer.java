@@ -83,7 +83,27 @@ public class LearningWebsocketServer {
     /**
      * A singleton which updates Learners with messages and presence.
      */
-    private static class SendWorker extends Thread {
+	private static class UpdateAzureInfoWorker extends Thread {
+		// 定时从数据库中取得聊天ai的配置信息
+		@Override
+		public void run() {
+			while (true) {
+				azureAiName = LearningWebsocketServer.getChatService().getAzureAiName();
+				if (StringUtils.isBlank(azureAiName)){
+					azureAiName = "bot";
+				}
+				azureApiKey = LearningWebsocketServer.getChatService().getAzureApiKey();
+				log.info("azureAiName:" + azureAiName);
+				log.info("azureApiKey:" + azureApiKey);
+				try {
+					sleep(60*1000L);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	private static class SendWorker extends Thread {
 	private boolean stopFlag = false;
 	// how ofter the thread runs
 	private static final long CHECK_INTERVAL = 2000;
@@ -262,6 +282,7 @@ public class LearningWebsocketServer {
     private static IUserManagementService userManagmentService;
 
     private static final SendWorker sendWorker = new SendWorker();
+    private static final UpdateAzureInfoWorker updateAzureInfoWorker = new UpdateAzureInfoWorker();
     private static final Map<Long, Roster> rosters = new ConcurrentHashMap<>();
     private static final Map<Long, Set<Websocket>> websockets = new ConcurrentHashMap<>();
 	private static String azureApiKey;
@@ -270,6 +291,7 @@ public class LearningWebsocketServer {
     static {
 	// run the singleton thread
 	LearningWebsocketServer.sendWorker.start();
+	LearningWebsocketServer.updateAzureInfoWorker.start();
     }
 
 	private static String getAzureApiKey(){
@@ -430,7 +452,7 @@ public class LearningWebsocketServer {
 							break;
 						}
 					}
-					String messageForAskAi = message.substring(7);
+					String messageForAskAi = message.substring(getAzureAiNameAndAt().length());
 					String result = askChatAiWithMessages(messageForAskAi, websocketFromUser);
 					HibernateSessionManager.openSession();
 					ChatUser chatAiUser = LearningWebsocketServer.getChatService()
