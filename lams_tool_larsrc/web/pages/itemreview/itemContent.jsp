@@ -29,10 +29,46 @@ License Information: http://lamsfoundation.org/licensing/lams/2.0/
 
 <script>
 
-	$(document).oncontextmenu = function(){
-		return false;
-	}
 	$(document).ready(function(){
+
+      $(document).oncontextmenu = function(){
+        return false;
+      }
+      <c:if test="${isDisplayableMedia}">
+          // 显示视频的时候禁止下载
+          document.getElementById("videoDiv").oncontextmenu = function(){
+          return false;
+      }
+      var videoElement=document.getElementById("videoElement");
+      var vol = 0.1; //1代表100%音量，每次增减0.1
+      var time = 30; //单位秒，每次增减30秒
+      document.onkeyup = function (event) {//鼠标键盘事件，上下左右和空格键功能
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+        //鼠标上下键控制视频音量
+        if (e && e.keyCode === 38) {
+          // 按 向上键
+          videoElement.volume !== 1 ? videoElement.volume += vol : 1;
+          return false;
+        } else if (e && e.keyCode === 40) {
+          // 按 向下键
+          videoElement.volume !== 0 ? videoElement.volume -= vol : 1;
+          return false;
+        } else if (e && e.keyCode === 37) {
+          // 按 向左键
+          videoElement.currentTime !== 0 ? videoElement.currentTime -= time : 1;
+          return false;
+        } else if (e && e.keyCode === 39) {
+          // 按 向右键
+          videoElement.volume !== videoElement.duration ? videoElement.currentTime += time : 1;
+          return false;
+        } else if (e && e.keyCode === 32) {
+          // 按空格键 判断当前是否暂停
+          videoElement.paused === true ? videoElement.play() : videoElement.pause();
+          return false;
+        }
+      };
+
+      </c:if>
 
 		<c:if test="${sessionMap.rateItems}">
 			initializeJRating();
@@ -66,14 +102,14 @@ License Information: http://lamsfoundation.org/licensing/lams/2.0/
 
 </script>
 	
-<div id="item-content-${itemUid}" class="item-content">
+<div id="item-content-${itemUid}" class="item-content fullHeight">
 	<c:if test="${not empty instructions}">
 		<div class="item-instructions">
 			<c:out value="${instructions}" escapeXml="false" />
 		</div>
 	</c:if>
 	
-	<div class="content-panel">
+	<div class="content-panel fullHeight">
 	
 		<div class="text-center" style="display: none">
 			<a href="<c:url value='${resourceItemReviewUrl}' />&preferDownload=true" class="download-button hidden btn btn-primary">
@@ -84,10 +120,10 @@ License Information: http://lamsfoundation.org/licensing/lams/2.0/
 			</a>
 		</div>
 
-		<a title="<fmt:message key='open.in.new.window' />" class="embedded-title" href="${resourceItemReviewUrl}"  target="_blank"   ></a>&nbsp;&nbsp;
-		<i title="<fmt:message key='open.in.new.window' />" class="new-window-icon fa fa-1 hidden fa-external-link" aria-hidden="true"></i>
-		<div class="embedded-description"></div>
-		<div class="embedded-content">
+		<a title="<fmt:message key='open.in.new.window' />" class="embedded-title" href="${resourceItemReviewUrl}"  target="_blank"   style="display: none" ></a>&nbsp;&nbsp;
+		<i title="<fmt:message key='open.in.new.window' />" class="new-window-icon fa fa-1 hidden fa-external-link" aria-hidden="true" style="display: none"></i>
+		<div class="embedded-description"  style="display: none"></div>
+		<div class="embedded-content fullHeight">
 		
 			<c:if test="${isDisplayableImage}">
 				<div class="embedded-file">
@@ -95,13 +131,13 @@ License Information: http://lamsfoundation.org/licensing/lams/2.0/
 				</div>
 			</c:if>
 			<c:if test="${isDisplayableMedia}">
-				<div class="embedded-file">
-					<video playsinline controls src="<c:url value='${resourceItemReviewUrl}' />&preferDownload=false"></video>
+				<div id="videoDiv" class="embedded-file">
+					<video id="videoElement"  playsinline controls="controls" controlslist="nodownload noremoteplayback" disablePictureInPicture src="<c:url value='${resourceItemReviewUrl}' />&preferDownload=false"></video>
 				</div>
 			</c:if>
 			<c:if test="${isDisplayableEmbed}">
-				<div class="embedded-file">
-					<embed src="<lams:WebAppURL/>pages/pdfjs/web/viewer.html?file=<c:url value='${resourceItemReviewUrl}' />&preferDownload=false#toolbar=0" />
+				<div class="embedded-file fullHeight">
+					<embed class="fullHeight" src="<lams:WebAppURL/>pages/pdfjs/web/viewer.html?file=<c:url value='${resourceItemReviewUrl}' />&preferDownload=false#toolbar=0" />
 				</div>
 			</c:if>		
 

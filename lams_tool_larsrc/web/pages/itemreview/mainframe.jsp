@@ -7,10 +7,18 @@
 	<%@ include file="/common/header.jsp"%>
 	
 	<style media="screen,projection" type="text/css">
+		html, body {
+			height: 100%;
+			margin: 0;
+		}
+	 	.fullHeight {
+			height: 100%;
+	 	}
+
 	 	.item-content {
 	 		padding: 5px;
 	 	}
-	 	
+
 	 	.item-instructions {
 	 		margin-bottom: 15px;
 	 		padding-bottom: 10px;
@@ -42,7 +50,7 @@
 	 	
 	 	.embedded-file embed {
 	 		width: 100%;
-	 		min-height: 500px;
+			height: 100%;
 	 	}
 	</style>
 
@@ -57,9 +65,9 @@
 	</script>
 </lams:head>
 
-<body class="stripes">
-	<lams:Page title="${title}" type="learner" hideProgressBar="true">
-		<div id="item-panel"></div>
+<body class="stripes fullHeight">
+	<lams:Page title="${title}" type="learner" hideProgressBar="true" fullScreen="true">
+		<div id="item-panel" class="fullHeight"></div>
 	</lams:Page>
 </body>
 

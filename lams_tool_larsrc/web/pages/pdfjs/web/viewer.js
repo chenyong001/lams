@@ -1414,7 +1414,8 @@ const PDFViewerApplication = {
     eventBus._on("presentationmode", webViewerPresentationMode);
     eventBus._on("switchannotationeditormode", webViewerSwitchAnnotationEditorMode);
     eventBus._on("switchannotationeditorparams", webViewerSwitchAnnotationEditorParams);
-    eventBus._on("print", webViewerPrint);
+    // 隐藏打印按钮
+    // eventBus._on("print", webViewerPrint);
     // 隐藏下载按钮
     // eventBus._on("download", webViewerDownload);
     eventBus._on("openinexternalapp", webViewerOpenInExternalApp);
@@ -1652,9 +1653,10 @@ exports.PDFViewerApplication = PDFViewerApplication;
         return;
       }
       const fileOrigin = new URL(file, window.location.href).origin;
-      if (fileOrigin !== viewerOrigin) {
-        throw new Error("file origin does not match viewer's");
-      }
+      // 跨域拦截
+      // if (fileOrigin !== viewerOrigin) {
+      //   throw new Error("file origin does not match viewer's");
+      // }
     } catch (ex) {
       PDFViewerApplication.l10n.get("loading_error").then(msg => {
         PDFViewerApplication._documentError(msg, {

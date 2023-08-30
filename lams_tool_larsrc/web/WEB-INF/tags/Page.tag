@@ -11,12 +11,16 @@
 <%@ attribute name="headingContent" required="false" rtexprvalue="true"%>
 <%@ attribute name="usePanel" required="false" rtexprvalue="true"%>
 <%@ attribute name="hideProgressBar" required="false" rtexprvalue="true"%>
+<%@ attribute name="fullScreen" required="false" rtexprvalue="true"%>
 
 <%@ tag  import="org.lamsfoundation.lams.util.Configuration"%>
 <%@ tag  import="org.lamsfoundation.lams.util.ConfigurationKeys"%>
 
 <c:if test="${empty usePanel}">				
 	<c:set var="usePanel">true</c:set>
+</c:if>
+<c:if test="${empty fullScreen}">
+	<c:set var="fullScreen">false</c:set>
 </c:if>
 <c:set var="displayPortrait"><%=Configuration.get(ConfigurationKeys.DISPLAY_PORTRAIT)%></c:set>
 
@@ -399,45 +403,90 @@
 		<div class="progress-bar-tooltip" id="progress-bar-tooltip"></div>
 		
 	</c:if> <%--  end of sidebar stuff - only used if in learner screen --%>
+		<c:choose>
+			<c:when test="${fullScreen}">
+				<div id="navcontent" class="content fullHeight">
+				<div class="row no-gutter no-margin fullHeight">
+				<div class="col-xs-12 fullHeight">
+				<div class="fullHeight">
 
-		<div id="navcontent" class="content">
-			<div class="row no-gutter no-margin">
-			<div class="col-xs-12">
-			<div class="container">
-				<c:choose>
-				<c:when test="${usePanel}">
-					<div class="panel panel-default panel-${type}-page">
-						<c:if test="${not empty title}">
-							<div class="panel-heading">
-								<div class="panel-title panel-${type}-title">
-									<c:out value="${title}" escapeXml="true" />
-									<c:if test="${not empty titleHelpURL}">
-										<span class="pull-right">${titleHelpURL}</span>
-									</c:if>
-								</div>
-								<c:if test="${not empty headingContent}">
-									<c:out value="${headingContent}" escapeXml="true" />
+					<c:choose>
+						<c:when test="${usePanel}">
+							<div class="panel panel-default panel-${type}-page fullHeight">
+								<c:if test="${not empty title}">
+									<div class="panel-heading">
+										<div class="panel-title panel-${type}-title">
+											<c:out value="${title}" escapeXml="true" />
+											<c:if test="${not empty titleHelpURL}">
+												<span class="pull-right">${titleHelpURL}</span>
+											</c:if>
+										</div>
+										<c:if test="${not empty headingContent}">
+											<c:out value="${headingContent}" escapeXml="true" />
+										</c:if>
+									</div>
 								</c:if>
+
+								<div class="panel-body panel-${type}-body fullHeight">
+									<jsp:doBody />
+								</div>
 							</div>
-						</c:if>
-						
-						<div class="panel-body panel-${type}-body">
+						</c:when>
+						<c:otherwise>
 							<jsp:doBody />
-						</div>
-					</div>
-				</c:when>
-				<c:otherwise>
-					<jsp:doBody />
-				</c:otherwise>
-				</c:choose>						
-				<%--  only have sidebar and presence in learner --%>
-				<c:if test="${ not hideProgressBar && ( empty mode || mode == 'author' || mode == 'learner') }">
-					<div id="presenceEnabledPatchDiv"></div>
-				</c:if>
-			</div>
+						</c:otherwise>
+					</c:choose>
+						<%--  only have sidebar and presence in learner --%>
+					<c:if test="${ not hideProgressBar && ( empty mode || mode == 'author' || mode == 'learner') }">
+						<div id="presenceEnabledPatchDiv"></div>
+					</c:if>
 				</div>
-			</div>
-		</div>
+				</div>
+				</div>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div id="navcontent" class="content">
+				<div class="row no-gutter no-margin">
+				<div class="col-xs-12 ">
+				<div class="container">
+
+					<c:choose>
+						<c:when test="${usePanel}">
+							<div class="panel panel-default panel-${type}-page">
+								<c:if test="${not empty title}">
+									<div class="panel-heading">
+										<div class="panel-title panel-${type}-title">
+											<c:out value="${title}" escapeXml="true" />
+											<c:if test="${not empty titleHelpURL}">
+												<span class="pull-right">${titleHelpURL}</span>
+											</c:if>
+										</div>
+										<c:if test="${not empty headingContent}">
+											<c:out value="${headingContent}" escapeXml="true" />
+										</c:if>
+									</div>
+								</c:if>
+
+								<div class="panel-body panel-${type}-body">
+									<jsp:doBody />
+								</div>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<jsp:doBody />
+						</c:otherwise>
+					</c:choose>
+						<%--  only have sidebar and presence in learner --%>
+					<c:if test="${ not hideProgressBar && ( empty mode || mode == 'author' || mode == 'learner') }">
+						<div id="presenceEnabledPatchDiv"></div>
+					</c:if>
+				</div>
+				</div>
+				</div>
+				</div>
+			</c:otherwise>
+		</c:choose>
 
 	</c:when>
 

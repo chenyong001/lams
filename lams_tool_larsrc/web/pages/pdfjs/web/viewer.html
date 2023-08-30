@@ -266,7 +266,8 @@ See https://github.com/adobe-type-tools/cmap-resources
                   <span data-l10n-id="open_file_label">Open</span>
                 </button>
 
-                <button id="print" class="toolbarButton hiddenMediumView" title="Print" tabindex="32" data-l10n-id="print">
+                <!-- 隐藏打印按钮 -->
+                <button id="print" style="display: none" class="toolbarButton hiddenMediumView" title="Print" tabindex="32" data-l10n-id="print">
                   <span data-l10n-id="print_label">Print</span>
                 </button>
                 <!-- 隐藏下载按钮 -->
@@ -276,7 +277,8 @@ See https://github.com/adobe-type-tools/cmap-resources
 
                 <div class="verticalToolbarSeparator hiddenMediumView"></div>
 
-                <div id="editorModeButtons" class="splitToolbarButton toggled" role="radiogroup">
+                <!-- 隐藏编辑按钮 -->
+                <div id="editorModeButtons" style="display: none" class="splitToolbarButton toggled" role="radiogroup">
                   <button id="editorFreeText" class="toolbarButton" disabled="disabled" title="Text" role="radio" aria-checked="false" aria-controls="editorFreeTextParamsToolbar" tabindex="34" data-l10n-id="editor_free_text2">
                     <span data-l10n-id="editor_free_text2_label">Text</span>
                   </button>
@@ -287,7 +289,8 @@ See https://github.com/adobe-type-tools/cmap-resources
 
                 <div id="editorModeSeparator" class="verticalToolbarSeparator"></div>
 
-                <button id="secondaryToolbarToggle" class="toolbarButton" title="Tools" tabindex="48" data-l10n-id="tools" aria-expanded="false" aria-controls="secondaryToolbar">
+                <!-- 隐藏更多按钮 -->
+                <button id="secondaryToolbarToggle"  style="display: none" class="toolbarButton" title="Tools" tabindex="48" data-l10n-id="tools" aria-expanded="false" aria-controls="secondaryToolbar">
                   <span data-l10n-id="tools_label">Tools</span>
                 </button>
               </div>
@@ -302,11 +305,11 @@ See https://github.com/adobe-type-tools/cmap-resources
                    </button>
                 </div>
                 <span id="scaleSelectContainer" class="dropdownToolbarButton">
-                  <select id="scaleSelect" title="Zoom" tabindex="23" data-l10n-id="zoom">
-                    <option id="pageAutoOption" title="" value="auto" selected="selected" data-l10n-id="page_scale_auto">Automatic Zoom</option>
+                  <select id="scaleSelect" title="Zoom" tabindex="23" data-l10n-id="zoom" autocomplete="off">
+                    <option id="pageAutoOption" title="" value="auto" data-l10n-id="page_scale_auto">Automatic Zoom</option>
                     <option id="pageActualOption" title="" value="page-actual" data-l10n-id="page_scale_actual">Actual Size</option>
                     <option id="pageFitOption" title="" value="page-fit" data-l10n-id="page_scale_fit">Page Fit</option>
-                    <option id="pageWidthOption" title="" value="page-width" data-l10n-id="page_scale_width">Page Width</option>
+                    <option id="pageWidthOption" title="" value="page-width" data-l10n-id="page_scale_width" selected = "selected">Page Width</option>
                     <option id="customScaleOption" title="" value="custom" disabled="disabled" hidden="true"></option>
                     <option title="" value="0.5" data-l10n-id="page_scale_percent" data-l10n-args='{ "scale": 50 }'>50%</option>
                     <option title="" value="0.75" data-l10n-id="page_scale_percent" data-l10n-args='{ "scale": 75 }'>75%</option>
@@ -431,10 +434,15 @@ See https://github.com/adobe-type-tools/cmap-resources
     <input type="file" id="fileInput" class="hidden">
 
 
-    <!-- 禁用页面右键菜单 -->
+    <!-- 禁用页面右键菜单，ctrl+s,ctrl+p快捷键功能 -->
     <script>
       document.oncontextmenu = function(){
         return false;
+      }
+      document.onkeydown = function(){
+        if (event.ctrlKey && window.event.keyCode == 80){
+          return false;
+        }
       }
       document.onkeydown = function(){
         if (event.ctrlKey && window.event.keyCode == 83){
