@@ -19,9 +19,10 @@ CKEDITOR.plugins.add( 'html5video', {
             dialog: 'html5video',
             init: function() {
                 var src = '';
+                var track = '';
                 var autoplay = '';
                 var loop = '';
-                var controls = '';
+                // var controls = '';
                 var align = this.element.getStyle( 'text-align' );
 
                 var width = '';
@@ -35,12 +36,14 @@ CKEDITOR.plugins.add( 'html5video', {
                     width = this.element.getChild( 0 ).getAttribute( 'width' );
                     height = this.element.getChild( 0 ).getAttribute( 'height' );
                     autoplay = this.element.getChild(0).getAttribute('autoplay');
-                    allowdownload = !this.element.getChild( 0 ).getAttribute( 'controlslist' );
+                    // allowdownload = !this.element.getChild( 0 ).getAttribute( 'controlslist' );
                     loop = this.element.getChild( 0 ).getAttribute( 'loop' );
                     advisorytitle = this.element.getChild( 0 ).getAttribute( 'title' );
-                    controls = this.element.getChild(0).getAttribute('controls');
-					responsive = this.element.getAttribute( 'data-responsive' );
+                    responsive = this.element.getAttribute( 'data-responsive' );
                     poster = this.element.getChild( 0 ).getAttribute( 'poster' );
+                    if (this.element.getChild( 0 ).getChild( 0 )){
+                        track = this.element.getChild( 0 ).getChild( 0 ).getAttribute( 'src' );
+                    }
                 }
 
                 if ( src ) {
@@ -64,28 +67,31 @@ CKEDITOR.plugins.add( 'html5video', {
                         this.setData( 'autoplay', 'yes' );
                     }
 
-                    if ( allowdownload ) {
-                        this.setData( 'allowdownload', 'yes' );
-                    }
+                    // if ( allowdownload ) {
+                    //     this.setData( 'allowdownload', 'no' );
+                    // }
 
                     if ( loop ) {
                         this.setData( 'loop', 'yes' );
                     }
-								
+
                     if ( advisorytitle ) {
                         this.setData( 'advisorytitle', advisorytitle );
                     }
-		
-                    if ( responsive ) {
-                        this.setData( 'responsive', responsive );	
-                    }
 
-                    if (controls) {
-                        this.setData('controls', controls);
+                    if ( responsive ) {
+                        this.setData( 'responsive', responsive );
                     }
+                    //
+                    // if (controls) {
+                    //     this.setData('controls', controls);
+                    // }
 
                     if ( poster ) {
                         this.setData('poster', poster);
+                    }
+                    if ( track ) {
+                        this.setData('track', track);
                     }
                 }
             },
@@ -97,9 +103,9 @@ CKEDITOR.plugins.add( 'html5video', {
                         // Create a new <video> element.
                         var videoElement = new CKEDITOR.dom.element( 'video' );
                         // Set the controls attribute.
-                        if (this.data.controls) {
+                        // if (this.data.controls) {
                             videoElement.setAttribute('controls', 'controls');
-                        }
+                        // }
                         // Append it to the container of the plugin.
                         this.element.append( videoElement );
                     }
@@ -117,7 +123,52 @@ CKEDITOR.plugins.add( 'html5video', {
                             this.element.getChild( 0 ).removeStyle( 'height' );
                     }
 
-                    if (this.data.poster) this.element.getChild( 0 ).setAttribute('poster', this.data.poster);								
+                    if (this.data.poster) this.element.getChild( 0 ).setAttribute('poster', this.data.poster);
+                    // 设置字幕节点
+                    var trackElement = this.element.getChild( 0 ).getChild( 0 );
+                    if (trackElement) {
+                        if ( this.data.track ){
+                            trackElement.setAttribute('src', this.data.track);
+                        } else {
+                            trackElement.remove();
+                        }
+                    } else {
+                        trackElement = new CKEDITOR.dom.element('track');
+                        if (this.data.track){
+                            trackElement.setAttribute('src', this.data.track);
+                            this.element.getChild(0).append(trackElement)
+                        }
+                    }
+
+
+                    // // 设置视频的快进快退
+                    // var vol = 0.1; //1代表100%音量，每次增减0.1
+                    // var time = 30; //单位秒，每次增减30秒
+                    // this.element.onkeyup = function (event) {//鼠标键盘事件，上下左右和空格键功能
+                    //     var e = event || window.event || arguments.callee.caller.arguments[0];
+                    //     //鼠标上下键控制视频音量
+                    //     if (e && e.keyCode === 38) {
+                    //         // 按 向上键
+                    //         videoElement.volume !== 1 ? videoElement.volume += vol : 1;
+                    //         return false;
+                    //     } else if (e && e.keyCode === 40) {
+                    //         // 按 向下键
+                    //         videoElement.volume !== 0 ? videoElement.volume -= vol : 1;
+                    //         return false;
+                    //     } else if (e && e.keyCode === 37) {
+                    //         // 按 向左键
+                    //         videoElement.currentTime !== 0 ? videoElement.currentTime -= time : 1;
+                    //         return false;
+                    //     } else if (e && e.keyCode === 39) {
+                    //         // 按 向右键
+                    //         videoElement.volume !== videoElement.duration ? videoElement.currentTime += time : 1;
+                    //         return false;
+                    //     } else if (e && e.keyCode === 32) {
+                    //         // 按空格键 判断当前是否暂停
+                    //         videoElement.paused === true ? videoElement.play() : videoElement.pause();
+                    //         return false;
+                    //     }
+                    // };
                 }
 
                 this.element.removeStyle( 'float' );
@@ -151,22 +202,20 @@ CKEDITOR.plugins.add( 'html5video', {
                         this.element.getChild( 0 ).removeAttribute( 'loop' );
                     }
 
-                    if ( this.data.allowdownload === 'yes' ) {
-                        this.element.getChild( 0 ).removeAttribute( 'controlslist' );
-                    } else {
-                        this.element.getChild( 0 ).setAttribute( 'controlslist', 'nodownload' );
+                    // 删除下载功能
+                    // if ( this.data.allowdownload === 'yes' ) {
+                    //     this.element.getChild( 0 ).removeAttribute( 'controlslist' );
+                    // } else {
+                    this.element.getChild( 0 ).setAttribute( 'controlslist', 'nodownload' );
+                    this.element.getChild( 0 ).oncontextmenu = function(){
+                        return false;
                     }
+                    // }
 
                     if ( this.data.advisorytitle ) {
                         this.element.getChild( 0 ).setAttribute( 'title', this.data.advisorytitle );
                     } else {
                         this.element.getChild( 0 ).removeAttribute( 'title' );
-                    }
-
-                    if (this.data.controls) {
-                        this.element.getChild(0).setAttribute('controls', 'controls');
-                    } else {
-                        this.element.getChild(0).removeAttribute('controls');
                     }
                 }
             }

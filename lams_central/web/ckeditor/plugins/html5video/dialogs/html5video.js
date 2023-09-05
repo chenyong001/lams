@@ -55,6 +55,39 @@ CKEDITOR.dialog.add( 'html5video', function( editor ) {
             {
                 type: 'vbox',
                 padding: 0,
+                children: [
+                    {
+                        type: 'hbox',
+                        widths: [ '365px', '110px' ],
+                        align: 'right',
+                        children: [ {
+                            type: 'text',
+                            id: 'subtitles',
+                            label: editor.lang.html5video.allowedSubtitles,
+                            required: false,
+                            setup: function( widget ) {
+                                this.setValue( widget.data.track  );
+                            },
+                            commit: function( widget ) {
+                                widget.setData( 'track', this.getValue() );
+                            }
+                        },
+                        {
+                            type: 'button',
+                            id: 'browse',
+                            // v-align with the 'txtUrl' field.
+                            // TODO: We need something better than a fixed size here.
+                            style: 'display:inline-block;margin-top:14px;',
+                            align: 'center',
+                            label: editor.lang.common.browseServer,
+                            hidden: true,
+                            filebrowser: 'info:subtitles'
+                        } ]
+                    } ]
+            },
+            {
+                type: 'vbox',
+                padding: 0,
                 
                 children: [{
                     type: 'hbox',
@@ -84,17 +117,17 @@ CKEDITOR.dialog.add( 'html5video', function( editor ) {
                     } ]
                 }]
             },
-            {
-                type: 'checkbox',
-                id: 'controls',
-                label: editor.lang.html5video.controls,
-                setup: function (widget) {
-                    this.setValue(widget.data.controls);
-                },
-                commit: function (widget) {
-                    widget.setData('controls', this.getValue() ? 'true' : '');
-                }
-            },
+            // {
+            //     type: 'checkbox',
+            //     id: 'controls',
+            //     label: editor.lang.html5video.controls,
+            //     setup: function (widget) {
+            //         this.setValue(widget.data.controls);
+            //     },
+            //     commit: function (widget) {
+            //         widget.setData('controls', this.getValue() ? 'true' : '');
+            //     }
+            // },
             {
                 type: 'hbox',
                 id: 'size',
@@ -180,7 +213,7 @@ CKEDITOR.dialog.add( 'html5video', function( editor ) {
                 padding: 10,
                 children: [ {
                     type: 'hbox',
-                    widths: ["33%", "33%", "33%"],
+                    widths: ["33%", "33%"],
                     children: [ {
                         type: 'radio',
                         id: 'autoplay',
@@ -216,25 +249,27 @@ CKEDITOR.dialog.add( 'html5video', function( editor ) {
                         commit: function( widget ) {
                             widget.setData( 'loop', this.getValue() );
                         }
-                    },
-                    {
-                        type: 'radio',
-                        id: 'allowdownload',
-                        label: editor.lang.html5video.allowdownload,
-                        items: [
-                            [editor.lang.html5video.yes, 'yes'],
-                            [editor.lang.html5video.no, 'no']
-                        ],
-                        'default': 'no',
-                        setup: function( widget ) {
-                            if ( widget.data.allowdownload ) {
-                                this.setValue(widget.data.allowdownload);
-                            }
-                        },
-                        commit: function( widget ) {
-                            widget.setData( 'allowdownload', this.getValue() );
-                        }
-                    } ]
+                    }
+                    // ,删除下载功能
+                    // {
+                    //     type: 'radio',
+                    //     id: 'allowdownload',
+                    //     label: editor.lang.html5video.allowdownload,
+                    //     items: [
+                    //         [editor.lang.html5video.yes, 'yes'],
+                    //         [editor.lang.html5video.no, 'no']
+                    //     ],
+                    //     'default': 'no',
+                    //     setup: function( widget ) {
+                    //         if ( widget.data.allowdownload ) {
+                    //             this.setValue(widget.data.allowdownload);
+                    //         }
+                    //     },
+                    //     commit: function( widget ) {
+                    //         widget.setData( 'allowdownload', this.getValue() );
+                    //     }
+                    // }
+                    ]
                 }, 
                 {
                     type: 'hbox',
