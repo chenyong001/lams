@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="APlayer.min.js"></script>
+    <link href="APlayer.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div id="player"></div>
+    </div>
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        let name = urlParams.get('name');
+        let artist = urlParams.get('artist');
+        let url = urlParams.get('url');
+        let cover = urlParams.get('cover');
+        let lrc = urlParams.get('lrc');
+        if (!name && url){
+            name = url.substring(url.lastIndexOf('/')+1);
+            name = name.substring(0, name.lastIndexOf('.')+1);
+        }
+        const ap = new APlayer({
+            element: document.getElementById('player'),
+            mini: false,
+            autoplay: false,
+            lrcType: 3,
+            mutex: true,
+            audio: [{
+                name: name ? name : "",
+                artist: artist ? artist : "",
+                url: url ? url : "",
+                cover: cover ? cover : "",
+                lrc: lrc ? lrc : "",
+                theme: '#ebd0c2'
+            }]
+        });
+    </script>
+</body>
+</html>
