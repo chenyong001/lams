@@ -40,30 +40,20 @@ License Information: http://lamsfoundation.org/licensing/lams/2.0/
           return false;
       }
       var videoElement=document.getElementById("videoElement");
-      var vol = 0.1; //1代表100%音量，每次增减0.1
       var time = 30; //单位秒，每次增减30秒
-      document.onkeyup = function (event) {//鼠标键盘事件，上下左右和空格键功能
-        var e = event || window.event || arguments.callee.caller.arguments[0];
-        //鼠标上下键控制视频音量
-        if (e && e.keyCode === 38) {
-          // 按 向上键
-          videoElement.volume !== 1 ? videoElement.volume += vol : 1;
-          return false;
-        } else if (e && e.keyCode === 40) {
-          // 按 向下键
-          videoElement.volume !== 0 ? videoElement.volume -= vol : 1;
-          return false;
-        } else if (e && e.keyCode === 37) {
+      document.onkeyup = function (event) {
+        if (event.keyCode === 37) {
           // 按 向左键
           videoElement.currentTime !== 0 ? videoElement.currentTime -= time : 1;
           return false;
-        } else if (e && e.keyCode === 39) {
+        } else if (event.keyCode === 39) {
           // 按 向右键
           videoElement.volume !== videoElement.duration ? videoElement.currentTime += time : 1;
           return false;
-        } else if (e && e.keyCode === 32) {
-          // 按空格键 判断当前是否暂停
-          videoElement.paused === true ? videoElement.play() : videoElement.pause();
+        } else if (event.keyCode === 32) {
+          // 按空格键 判断当前是否暂停 todo 这里有bug，实际情况浏览器中videoElement.paused取值有问题导致这里不能正常运行
+			console.log("videoElement.paused=" + videoElement.paused);
+			videoElement.paused === true ? videoElement.play() : videoElement.pause();
           return false;
         }
       };
