@@ -118,7 +118,7 @@ CKEDITOR.plugins.add( 'html5video', {
                             this.element.getChild( 0 ).setStyle( 'max-width', '100%' );
                             this.element.getChild( 0 ).setStyle( 'height', 'auto' );
                     } else {
-			    this.element.removeAttribute("data-responsive");
+			                      this.element.removeAttribute("data-responsive");
                             this.element.getChild( 0 ).removeStyle( 'max-width' );
                             this.element.getChild( 0 ).removeStyle( 'height' );
                     }
@@ -139,36 +139,6 @@ CKEDITOR.plugins.add( 'html5video', {
                             this.element.getChild(0).append(trackElement)
                         }
                     }
-
-
-                    // // 设置视频的快进快退
-                    // var vol = 0.1; //1代表100%音量，每次增减0.1
-                    // var time = 30; //单位秒，每次增减30秒
-                    // this.element.onkeyup = function (event) {//鼠标键盘事件，上下左右和空格键功能
-                    //     var e = event || window.event || arguments.callee.caller.arguments[0];
-                    //     //鼠标上下键控制视频音量
-                    //     if (e && e.keyCode === 38) {
-                    //         // 按 向上键
-                    //         videoElement.volume !== 1 ? videoElement.volume += vol : 1;
-                    //         return false;
-                    //     } else if (e && e.keyCode === 40) {
-                    //         // 按 向下键
-                    //         videoElement.volume !== 0 ? videoElement.volume -= vol : 1;
-                    //         return false;
-                    //     } else if (e && e.keyCode === 37) {
-                    //         // 按 向左键
-                    //         videoElement.currentTime !== 0 ? videoElement.currentTime -= time : 1;
-                    //         return false;
-                    //     } else if (e && e.keyCode === 39) {
-                    //         // 按 向右键
-                    //         videoElement.volume !== videoElement.duration ? videoElement.currentTime += time : 1;
-                    //         return false;
-                    //     } else if (e && e.keyCode === 32) {
-                    //         // 按空格键 判断当前是否暂停
-                    //         videoElement.paused === true ? videoElement.play() : videoElement.pause();
-                    //         return false;
-                    //     }
-                    // };
                 }
 
                 this.element.removeStyle( 'float' );

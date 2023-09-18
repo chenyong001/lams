@@ -576,4 +576,10 @@ public interface IUserManagementService {
      * Looks for [login].png images in /tmp/portraits of user IDs within given range and starting with the given prefix
      */
     List<String> uploadPortraits(Integer minUserId, Integer maxUserId, String prefix) throws IOException;
+
+    /**
+     * 取得一个未登录的测试用户
+     * @return
+     */
+    User getTestUserForRandomLogin();
 }

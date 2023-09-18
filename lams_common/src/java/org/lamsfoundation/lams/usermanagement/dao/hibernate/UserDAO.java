@@ -198,4 +198,9 @@ public class UserDAO extends LAMSBaseDAO implements IUserDAO {
 	    }
 	}
     }
+
+	@Override
+	public List<User> getTestUsers() {
+		return find("FROM User u WHERE u.testUser=true");
+	}
 }

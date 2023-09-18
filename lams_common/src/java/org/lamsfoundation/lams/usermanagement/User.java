@@ -79,6 +79,9 @@ public class User implements Serializable, Comparable<User> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
 
+    @Column(name = "test_user")
+    private Boolean testUser;
+
     @Column
     private String login;
 
@@ -678,5 +681,13 @@ public class User implements Serializable, Comparable<User> {
 
     public void setLockOutTime(Date lockOutTime) {
 	this.lockOutTime = lockOutTime;
+    }
+
+    public Boolean getTestUser() {
+        return testUser;
+    }
+
+    public void setTestUser(Boolean testUser) {
+        this.testUser = testUser;
     }
 }

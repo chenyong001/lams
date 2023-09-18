@@ -645,6 +645,7 @@
 			<url-pattern>/services/xml/CourseGroupManager</url-pattern>
 			<url-pattern>/services/SPEnrolment</url-pattern>
 			<url-pattern>/ForgotPasswordRequest</url-pattern>
+			<url-pattern>/loginTestAccount.do</url-pattern>
 			<url-pattern>/forgotPasswordChange.jsp</url-pattern>
 			<url-pattern>/forgotPasswordProc.jsp</url-pattern>
 			<url-pattern>/loginTwoFactorAuth.jsp</url-pattern>

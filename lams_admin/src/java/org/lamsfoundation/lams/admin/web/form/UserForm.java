@@ -29,6 +29,7 @@ public class UserForm {
     private Integer orgId;
     private Integer userId;
     private String login;
+    private Boolean testUser;
     private String password;
     private String password2;
     private String changePassword;
@@ -58,6 +59,13 @@ public class UserForm {
     // <!-- Name different to real field to avoid overwriting in bean copies -->
     private String initialPortraitId = null;
 
+    public Boolean getTestUser() {
+        return testUser;
+    }
+
+    public void setTestUser(Boolean testUser) {
+        this.testUser = testUser;
+    }
     public Integer getOrgId() {
 	return orgId;
     }

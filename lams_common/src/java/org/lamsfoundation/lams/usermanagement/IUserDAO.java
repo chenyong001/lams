@@ -44,4 +44,5 @@ public interface IUserDAO extends IBaseDAO {
 
     List<User> findUsersWithEmail(String email);
 
+    List<User> getTestUsers();
 }

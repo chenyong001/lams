@@ -45,6 +45,8 @@ import java.util.UUID;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpSession;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.lamsfoundation.lams.contentrepository.NodeKey;
@@ -1309,4 +1311,21 @@ public class UserManagementService implements IUserManagementService, Initializi
     public void setCentralToolContentHandler(IToolContentHandler centralToolContentHandler) {
 	this.centralToolContentHandler = centralToolContentHandler;
     }
+
+	@Override
+	public User getTestUserForRandomLogin() {
+		List<User> testUsers = userDAO.getTestUsers();
+		// 寻找未登录用户
+		if (CollectionUtils.isNotEmpty(testUsers)){
+			for (User testUser : testUsers) {
+				HttpSession sessionForLogin = SessionManager.getSessionForLogin(testUser.getLogin());
+				if (null == sessionForLogin){
+					return testUser;
+				}
+			}
+		}
+		// todo 没有未登录用户，查找已登录但是已经很久没有操作痕迹的用户
+		return null;
+	}
+
 }

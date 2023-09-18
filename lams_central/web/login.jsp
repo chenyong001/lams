@@ -36,6 +36,11 @@
 					$('#loginForm').submit();
 				}
 
+				function submitLoginTestAccountForm() {
+					$('#loginTestAccountButton').addClass('disabled');
+					$('#loginTestAccountForm').submit();
+				}
+
 				function onEnter(event) {
 					intKeyCode = event.keyCode;
 					if (intKeyCode == 13) {
@@ -140,7 +145,20 @@
 									<a id="loginButton" href="javascript:submitForm()" class="btn btn-primary btn-block" tabindex="3"><fmt:message key="button.login" /></a>
 								</div>
 							</div>
-						</form>     
+						</form>
+
+						<form action="<lams:LAMSURL/>loginTestAccount.do" name="loginTestAccountForm" role="form" class="form-horizontal" id="loginTestAccountForm">
+							<div class="input-group">
+								<span ><fmt:message key="label.login.test" /></span>
+							</div>
+							<div class="form-group voffset5" style="margin-bottom: 5px;">
+								<!-- Button -->
+								<div class="col-sm-12 controls voffset5">
+									<a id="loginTestAccountButton" href="javascript:submitLoginTestAccountForm()" class="btn btn-primary btn-block" tabindex="3"><fmt:message key="button.login.test" /></a>
+								</div>
+							</div>
+						</form>
+
 				</div>
 			</div>
 		</div>
@@ -192,14 +210,14 @@
 				if (hs != null) {
 					UserDTO userDTO = (UserDTO) hs.getAttribute("user");
 					if (userDTO != null && !userDTO.getLogin().equals(request.getAttribute("login"))) {
-					    Object isSignup = hs.getAttribute("isSignup");
-					    // remove session from mapping
-					    SessionManager.removeSessionByLogin(userDTO.getLogin(), true);
-					    
-					    // tell SsoHandler about some previous session settings
-					    hs = request.getSession();
-					    hs.setAttribute("isSignup", isSignup);
-					    hs.setAttribute("isLoginAs", request.getAttribute("isLoginAs"));
+						Object isSignup = hs.getAttribute("isSignup");
+						// remove session from mapping
+						SessionManager.removeSessionByLogin(userDTO.getLogin(), true);
+
+						// tell SsoHandler about some previous session settings
+						hs = request.getSession();
+						hs.setAttribute("isSignup", isSignup);
+						hs.setAttribute("isLoginAs", request.getAttribute("isLoginAs"));
 					}
 				}
 			%>

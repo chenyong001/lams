@@ -478,6 +478,13 @@
 										<form:checkbox path="twoFactorAuthenticationEnabled" value="true"  />
 									</td>
 								</tr>
+								<!-- lams_user增加test_user字段，admin用户进行控制 -->
+								<tr>
+									<td class="align-right"><fmt:message key="admin.user.test_user" />:</td>
+									<td>
+										<form:checkbox path="testUser" value="false" id="testUser"  />
+									</td>
+								</tr>
 							</c:if>
 							
 							<c:if test="${not empty userForm.createDate}">

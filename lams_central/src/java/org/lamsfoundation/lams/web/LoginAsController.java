@@ -45,6 +45,7 @@ import org.lamsfoundation.lams.web.util.AttributeNames;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -113,6 +114,28 @@ public class LoginAsController {
 
 	return "forward:/admin/usersearch.do";
     }
+
+    @RequestMapping("/loginTestAccount")
+    public String loginTestAccount(HttpServletRequest request)  {
+		User testUser = userManagementService.getTestUserForRandomLogin();
+		if (null == testUser){
+			request.setAttribute("errorName", "Login test account");
+			request.setAttribute("errorMessage",
+					messageService.getMessage("error.donot.have.test.account"));
+			return "errorpages/errorWithMessage";
+		}
+
+		// login.jsp knows what to do with these
+		request.setAttribute("login", testUser.getLogin());
+		String token = "#LAMS" + RandomPasswordGenerator.nextPassword(10);
+		request.setAttribute("password", token);
+		// notify the login module that the user has been authenticated correctly
+		UniversalLoginModule.setAuthenticationToken(token);
+		// redirect to login page
+		request.setAttribute("redirectURL", "/lams/index.jsp");
+		request.setAttribute("isLoginAs", true);
+		return "login";
+	}
 
     private boolean isOnlyLearner(Integer userId) {
 	Map<Integer, Set<Integer>> orgRoleSets = userManagementService.getRolesForUser(userId);
