@@ -479,6 +479,11 @@ public class LAMSBaseDAO implements IBaseDAO {
 	return doFind(queryString, true, values);
     }
 
+	public List doFindMax(final String queryString, int max, final Object... values) {
+		Query queryObject = convertLegacyStyleParameters(queryString, values).setMaxResults(max);
+		return queryObject.setCacheable(false).list();
+	}
+
     private List doFind(final String queryString, boolean cache, final Object... values) {
 	Query queryObject = convertLegacyStyleParameters(queryString, values);
 	return queryObject.setCacheable(cache).list();

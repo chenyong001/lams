@@ -48,7 +48,8 @@ public class LogEventDAO extends LAMSBaseDAO implements ILogEventDAO {
 
     private static final String GET_LOG_EVENT_BY_USER = "from " + LogEvent.class.getName()
 	    + " where user_id = ? order by occurred_date_time asc";
-
+    private static final String GET_NEWEST_LOG_EVENT_BY_USER = "from " + LogEvent.class.getName()
+			+ " where user_id = ? order by occurred_date_time desc";
     private static final String GET_LOG_EVENTS_OCCURED_BETWEEN_DATES = "from " + LogEvent.class.getName()
 	    + " where occurred_date_time > ? and occurred_date_time <= ? order by occurred_date_time asc";
 
@@ -79,7 +80,13 @@ public class LogEventDAO extends LAMSBaseDAO implements ILogEventDAO {
 	return doFind(GET_LOG_EVENT_BY_USER, userId);
     }
 
-    @Override
+	@Override
+	public LogEvent getNewestLogEventByUser(Integer userId) {
+		List list = doFindMax(GET_NEWEST_LOG_EVENT_BY_USER, 1, userId);
+		return null == list ? null : (LogEvent)list.get(0);
+	}
+
+	@Override
     @SuppressWarnings("unchecked")
     public List<LogEvent> getEventsOccurredBetween(Date startDate, Date finishDate) {
 	return doFind(GET_LOG_EVENTS_OCCURED_BETWEEN_DATES, startDate, finishDate);

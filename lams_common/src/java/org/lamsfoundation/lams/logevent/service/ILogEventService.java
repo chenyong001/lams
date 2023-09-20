@@ -89,6 +89,14 @@ public interface ILogEventService {
     List<LogEvent> getLogEventByUser(Integer userId);
 
     /**
+     * Returns the newest event initiated by user
+     *
+     * @param userId
+     * @return
+     */
+    LogEvent getNewestLogEventByUser(Integer userId);
+
+    /**
      * Returns all events occurred between specified dates
      *
      * @param startDate

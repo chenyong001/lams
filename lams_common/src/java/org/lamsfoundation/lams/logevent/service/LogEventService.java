@@ -120,7 +120,12 @@ public class LogEventService implements ILogEventService {
 	return logEventDAO.getByUser(userId);
     }
 
-    @Override
+	@Override
+	public LogEvent getNewestLogEventByUser(Integer userId) {
+		return logEventDAO.getNewestLogEventByUser(userId);
+	}
+
+	@Override
     public List<LogEvent> getEventsOccurredBetween(Date startDate, Date finishDate) {
 	return logEventDAO.getEventsOccurredBetween(startDate, finishDate);
     }

@@ -1315,16 +1315,27 @@ public class UserManagementService implements IUserManagementService, Initializi
 	@Override
 	public User getTestUserForRandomLogin() {
 		List<User> testUsers = userDAO.getTestUsers();
-		// 寻找未登录用户
 		if (CollectionUtils.isNotEmpty(testUsers)){
+			// 寻找未登录用户
 			for (User testUser : testUsers) {
 				HttpSession sessionForLogin = SessionManager.getSessionForLogin(testUser.getLogin());
 				if (null == sessionForLogin){
 					return testUser;
 				}
 			}
+			// 查找已登录但是超过1小时没有操作痕迹的用户
+			long now = System.currentTimeMillis();
+			for (User testUser : testUsers) {
+				ILogEventService logEventService = getLogEventService();
+				LogEvent logEvent = logEventService.getNewestLogEventByUser(testUser.getUserId());
+				if (null != logEvent){
+					if (now - logEvent.getOccurredDateTime().getTime() > 60 * 60 * 1000){
+						return testUser;
+					}
+				}
+			}
 		}
-		// todo 没有未登录用户，查找已登录但是已经很久没有操作痕迹的用户
+
 		return null;
 	}
 
