@@ -147,20 +147,24 @@
 							</div>
 						</form>
 
-						<form action="<lams:LAMSURL/>loginTestAccount.do" name="loginTestAccountForm" role="form" class="form-horizontal" id="loginTestAccountForm">
-							<div class="input-group">
-								<span ><fmt:message key="label.login.test" /></span>
-							</div>
-							<div class="form-group voffset5" style="margin-bottom: 5px;">
-								<!-- Button -->
-								<div class="col-sm-12 controls voffset5">
-									<a id="loginTestAccountButton" href="javascript:submitLoginTestAccountForm()" class="btn btn-primary btn-block" tabindex="3"><fmt:message key="button.login.test" /></a>
-								</div>
-							</div>
-						</form>
-
-				</div>
-			</div>
+		</div>
+		  <div class="panel-heading">
+			  <div class="panel-title"> <fmt:message key="button.login.test" /></div>
+		  </div>
+		  <div class="panel-body" >
+		  <form action="<lams:LAMSURL/>loginTestAccount.do" name="loginTestAccountForm" role="form" class="form-horizontal" id="loginTestAccountForm">
+			  <div class="input-group">
+				  <span ><fmt:message key="label.login.test" /></span>
+			  </div>
+			  <div class="form-group voffset5" style="margin-bottom: 5px;">
+				  <!-- Button -->
+				  <div class="col-sm-12 controls voffset5">
+					  <a id="loginTestAccountButton" href="javascript:submitLoginTestAccountForm()" class="btn btn-primary btn-block" tabindex="3"><fmt:message key="button.login.test" /></a>
+				  </div>
+			  </div>
+		  </form>
+		</div>
+		  </div>
 		</div>
 	</div>
 	<!--closes content-->
