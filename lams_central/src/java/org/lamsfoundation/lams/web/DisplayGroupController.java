@@ -355,6 +355,13 @@ public class DisplayGroupController {
 			"index.remove.lesson.tooltip"));
 	    }
 
+	    // Add qrcode
+	    if (isGroupManagerOrMonitor) {
+		String qrCodeLink = "javascript:qrcode(" + bean.getId() + ")";
+		lessonLinks.addFirst(new IndexLinkBean("index.qrcode", qrCodeLink, "fa fa-fw fa-qrcode",
+			"index.qrcode.tooltip"));
+	    }
+
 	    if (lessonLinks.size() > 0) {
 		bean.setLinks(lessonLinks);
 	    }

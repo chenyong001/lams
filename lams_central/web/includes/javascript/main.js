@@ -542,6 +542,25 @@ function showConditionsDialog(lessonID){
 	}, true);
 }
 
+function qrcode(lessonID){
+	var id = "dialogQrcode" + lessonID;
+	showDialog(id, {
+		'data' : {
+			'lessonID' : lessonID
+		},
+		'height': Math.max(380, Math.min(650, $(window).height() - 30)),
+		'width' : Math.max(380, Math.min(610, $(window).width() - 60)),
+		'title' : '访问二维码',
+		'open' : function() {
+			var lessonID = $(this).data('lessonID');
+			// load contents after opening the dialog
+			$('iframe', this).attr({'src': LAMS_URL
+				+ 'qrcode/demo.html?lessonID=' + lessonID,
+				'id' : 'QrcodeModal'});
+		}
+	}, true);
+}
+
 function showSearchLessonDialog(orgID){
 	var id = "dialogSearchLesson" + orgID;
 	showDialog(id, {

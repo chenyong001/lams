@@ -27,6 +27,8 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.poi.util.StringUtil;
 import org.lamsfoundation.lams.integration.security.RandomPasswordGenerator;
 import org.lamsfoundation.lams.integration.service.IntegrationService;
 import org.lamsfoundation.lams.logevent.LogEvent;
@@ -118,6 +120,7 @@ public class LoginAsController {
     @RequestMapping("/loginTestAccount")
     public String loginTestAccount(HttpServletRequest request)  {
 		User testUser = userManagementService.getTestUserForRandomLogin();
+		String lessonID = request.getParameter("lessonID");
 		if (null == testUser){
 			request.setAttribute("errorName", "Login test account");
 			request.setAttribute("errorMessage",
@@ -132,7 +135,11 @@ public class LoginAsController {
 		// notify the login module that the user has been authenticated correctly
 		UniversalLoginModule.setAuthenticationToken(token);
 		// redirect to login page
-		request.setAttribute("redirectURL", "/lams/index.jsp");
+		if (StringUtils.isNotBlank(lessonID)){
+			request.setAttribute("redirectURL", "/lams/home/learner.do?lessonID=" + lessonID);
+		} else {
+			request.setAttribute("redirectURL", "/lams/index.do");
+		}
 		request.setAttribute("isLoginAs", true);
 		return "login";
 	}

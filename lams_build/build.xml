@@ -778,6 +778,7 @@
 	
 	
 	<!-- cruise control task : build lams -->
+	<!-- 此命令完全重新部署lams，会有重置数据库表数据的操作，不想更新数据库请使用deploy-lams-nodb -->
 	<target name="deploy-lams" depends="_build-ear, build-db, _deploy-ear, _deploy-resources, _deploy-tools, _deploy-learning-libraries"
 		    description="Builds entire LAMS" />
 	
@@ -1000,6 +1001,7 @@
 	</target>
 
 <!-- ******************************** 新加ant命令 by mafeng ************************************************************ -->
+	<!-- 更新数据库连接信息 -->
 	<target name="update_db_connect">
 		<copy todir="${server.home}/standalone/configuration" overwrite="true" verbose="true">
 			<fileset file="${conf.dir}/standalone.xml" />
@@ -1062,8 +1064,7 @@
 		</copy>
 	</target>
 
-	<!-- 本地修改了核心模块代码或者插件代码可以用这个更新，执行后将assembly/lams.ear中的内容复制到jboss的目录下进行覆盖 -->
-	<!-- 该命令会将插件模块直接更新到jboss的目录中，核心模块打包到assembly/lams.ear中，需要手动复制到jboss目录中-->
+	<!-- 该命令会将插件模块(命名为lams_tool_***的模块)直接更新到jboss的目录中，核心模块(命令为lams_tool_***之外的模块)打包到assembly/lams.ear中，需要手动复制到jboss目录中-->
 	<target name="deploy-ear-updater" depends="_build-ear, _deploy-tools-nodb, _deploy-learning-libraries-nodb"
 			description="Deploys EAR file to the win_installer directory.">
 		<echo>Deploying EAR and tools to Windows Installer dir</echo>
@@ -1073,7 +1074,6 @@
 		</copy>
 	</target>
 
-	<!-- 本地修改了插件的代码可以用这个更新2，执行后将assembly/lams.ear中的内容复制到jboss的目录下进行覆盖 -->
 	<!-- 该命令会将插件模块直接更新到jboss的目录中，核心模块打包到assembly/lams.ear中，需要手动复制到jboss目录中-->
 	<target name="deploy-ear-updater2" depends="_build-ear-noconf, _deploy-tools-nodb2, _deploy-learning-libraries-nodb"
 			description="Deploys EAR file to the win_installer directory.">
@@ -1084,8 +1084,8 @@
 		</copy>
 	</target>
 
-	<!-- 本地修改了插件的代码可以用这个更新3，执行后将assembly/lams.ear中的内容复制到jboss的目录下进行覆盖 -->
 	<!-- 该命令会将插件模块、核心模块都打包到assembly/lams.ear中，需要手动复制到jboss目录中-->
+	<!-- 部署到服务器场景就用此命令，然后将/win_installer/assembly/lams.ear打包上传到服务器上覆盖之前jboss的部署内容-->
 	<target name="deploy-ear-updater2-as" depends="_build-ear-noconf, _deploy-tools-nodb2-as, _deploy-learning-libraries-nodb-as"
 			description="Deploys EAR file to the win_installer directory.">
 		<echo>Deploying EAR and tools to Windows Installer dir</echo>
