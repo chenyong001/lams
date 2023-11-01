@@ -13,7 +13,7 @@ UPDATE lams_qb_question AS q LEFT JOIN lams_qb_option AS o ON q.uid = o.qb_quest
 		AND (o.uid IS NULL OR o.name NOT LIKE CONCAT('%secure/', SUBSTRING(q.content_folder_id, 0, 2)))));
 
 -- lams_user表增加test_user 字段
-ALTER TABLE lams_user ADD COLUMN test_user TINYINT NOT NULL DEFAULT 0;
+ALTER TABLE lams_user ADD COLUMN test_user TINYINT DEFAULT 0;
 -- Put all sql statements above here
 
 -- If there were no errors, commit and restore autocommit to on
