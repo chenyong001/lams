@@ -19,7 +19,7 @@
         let lrc = urlParams.get('lrc');
         if (!name && url){
             name = url.substring(url.lastIndexOf('/')+1);
-            name = name.substring(0, name.lastIndexOf('.')+1);
+            name = name.substring(0, name.lastIndexOf('.'));
         }
         const ap = new APlayer({
             element: document.getElementById('player'),

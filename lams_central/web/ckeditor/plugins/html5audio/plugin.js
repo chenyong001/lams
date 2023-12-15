@@ -77,18 +77,18 @@ CKEDITOR.plugins.add( 'html5audio', {
                     if ( !iframeElement ) {
                         // Create a new <audio> element.
                         iframeElement = new CKEDITOR.dom.element( 'iframe' );
-                        iframeElement.setAttribute( 'name', this.data.name);
-                        iframeElement.setAttribute( 'artist', this.data.artist);
-                        iframeElement.setAttribute( 'url', this.data.url);
-                        iframeElement.setAttribute( 'cover', this.data.cover);
-                        iframeElement.setAttribute( 'lrc', this.data.lrc);
+                        iframeElement.setAttribute( 'name', this.data.name ? this.data.name : "");
+                        iframeElement.setAttribute( 'artist', this.data.artist ? this.data.artist : "");
+                        iframeElement.setAttribute( 'url', this.data.url ? this.data.url : "");
+                        iframeElement.setAttribute( 'cover', this.data.cover ? this.data.cover : "");
+                        iframeElement.setAttribute( 'lrc', this.data.lrc ? this.data.lrc : "");
                         this.element.append( iframeElement );
                     } else {
-                        iframeElement.setAttribute( 'name', this.data.name);
-                        iframeElement.setAttribute( 'artist', this.data.artist);
-                        iframeElement.setAttribute( 'url', this.data.url);
-                        iframeElement.setAttribute( 'cover', this.data.cover);
-                        iframeElement.setAttribute( 'lrc', this.data.lrc);
+                        iframeElement.setAttribute( 'name', this.data.name ? this.data.name : "");
+                        iframeElement.setAttribute( 'artist', this.data.artist ? this.data.artist : "");
+                        iframeElement.setAttribute( 'url', this.data.url ? this.data.url : "");
+                        iframeElement.setAttribute( 'cover', this.data.cover ? this.data.cover : "");
+                        iframeElement.setAttribute( 'lrc', this.data.lrc ? this.data.lrc : "");
                     }
 
                     src += this.data.name ? 'name=' + this.data.name + '&' : "";
